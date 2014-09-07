@@ -89,15 +89,16 @@ func (s *SkipList) Delete(value LessEqual) bool {
 	for i := s.height; i >= 0; i-- {
 		for ; current.next[i] != nil; current = current.next[i] {
 			next := current.next[i]
+			if value.Less(next.value) {
+				break
+			}
+
 			if value.Equal(next.value) {
 				current.next[i] = next.next[i]
 				deleted = true
 				break
 			}
 
-			if value.Less(next.value) {
-				break
-			}
 		}
 	}
 
