@@ -64,3 +64,68 @@ func TestSkipListInsertSearch(t *testing.T) {
 		}
 	}
 }
+
+func TestSkipListInsertDelete(t *testing.T) {
+	s := NewSkipList()
+
+	s.Insert(TestType(3))
+	s.Insert(TestType(6))
+	s.Insert(TestType(9))
+	s.Insert(TestType(8))
+	s.Insert(TestType(5))
+	s.Insert(TestType(4))
+
+	unknownNumber := 7
+
+	tests := []struct{
+		TestType
+		Success bool
+	}{
+		{
+			TestType(3),
+			true,
+		},
+		{
+			TestType(unknownNumber),
+			false,
+		},
+		{
+			TestType(6),
+			true,
+		},
+		{
+			TestType(9),
+			true,
+		},
+		{
+			TestType(3),
+			false,
+		},
+		{
+			TestType(8),
+			true,
+		},
+		{
+			TestType(5),
+			true,
+		},
+		{
+			TestType(4),
+			true,
+		},
+		{
+			TestType(4),
+			false,
+		},
+	}
+
+	for _, test := range tests {
+		out := s.Delete(test.TestType)
+		if test.Success != out {
+			t.Error("Failed for %d. Expected: %t, actual: %t",
+				test.TestType,
+				test.Success,
+				out)
+		}
+	}
+}

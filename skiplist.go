@@ -20,7 +20,6 @@ type LessEqual interface {
 
 type SkipListNode struct {
 	value LessEqual
-	prev *SkipListNode
 	next []*SkipListNode
 }
 
@@ -61,7 +60,6 @@ func (s *SkipList) Insert(value LessEqual) {
 
 		node.next[i] = current.next[i]
 		current.next[i] = node
-		node.prev = current
 	}
 }
 
@@ -82,6 +80,35 @@ func (s *SkipList) Search(value LessEqual) bool {
 	}
 
 	return false
+}
+
+func (s *SkipList) Delete(value LessEqual) bool {
+	current := s.head
+	deleted := false
+
+	for i := s.height; i >= 0; i-- {
+		for ; current.next[i] != nil; current = current.next[i] {
+			next := current.next[i]
+			if value.Equal(next.value) {
+				current.next[i] = next.next[i]
+				deleted = true
+				break
+			}
+
+			if value.Less(next.value) {
+				break
+			}
+		}
+	}
+
+	current = s.head
+	for i := s.height; i >= 0; i-- {
+		if current.next[i] == nil {
+			s.height--
+		}
+	}
+
+	return deleted
 }
 
 func (s *SkipList) Print(w io.Writer) {
