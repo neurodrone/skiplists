@@ -122,7 +122,7 @@ func TestSkipListInsertDelete(t *testing.T) {
 	for _, test := range tests {
 		out := s.Delete(test.TestType)
 		if test.Success != out {
-			t.Error("Failed for %d. Expected: %t, actual: %t",
+			t.Errorf("Failed for %d. Expected: %t, actual: %t",
 				test.TestType,
 				test.Success,
 				out)
