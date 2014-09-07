@@ -70,13 +70,14 @@ func (s *SkipList) Search(value LessEqual) bool {
 	for i := s.height; i >= 0; i-- {
 		for ; current.next[i] != nil; current = current.next[i] {
 			next := current.next[i]
-			if next.value.Equal(value) {
-				return true
-			}
-
 			if value.Less(next.value) {
 				break
 			}
+
+			if value.Equal(next.value) {
+				return true
+			}
+
 		}
 	}
 
@@ -96,9 +97,8 @@ func (s *SkipList) Print(w io.Writer) {
 		for current = s.head.next[i];
 			current != nil;
 			current = current.next[i] {
-				for ; k < bottomRow[current.value]; {
+				for ; k < bottomRow[current.value]; k++ {
 					fmt.Fprintf(w, "--")
-					k++
 				}
 
 				k = bottomRow[current.value] + 1
