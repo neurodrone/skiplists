@@ -24,9 +24,9 @@ func TestSkipListInsertSearch(t *testing.T) {
 	s.Insert(TestType(5))
 	s.Insert(TestType(4))
 
-	tests := []struct{
+	tests := []struct {
 		TestInput TestType
-		Success bool
+		Success   bool
 	}{
 		{
 			TestType(3),
@@ -77,7 +77,7 @@ func TestSkipListInsertDelete(t *testing.T) {
 
 	unknownNumber := 7
 
-	tests := []struct{
+	tests := []struct {
 		TestType
 		Success bool
 	}{
