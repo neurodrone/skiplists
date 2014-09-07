@@ -103,9 +103,11 @@ func (s *SkipList) Delete(value LessEqual) bool {
 
 	current = s.head
 	for i := s.height; i >= 0; i-- {
-		if current.next[i] == nil {
-			s.height--
+		if current.next[i] != nil {
+			break
 		}
+
+		s.height--
 	}
 
 	return deleted
