@@ -10,7 +10,7 @@ const maxHeight = 32
 
 type SkipList struct {
 	height int
-	head *SkipListNode
+	head   *SkipListNode
 }
 
 type LessEqual interface {
@@ -20,7 +20,7 @@ type LessEqual interface {
 
 type SkipListNode struct {
 	value LessEqual
-	next []*SkipListNode
+	next  []*SkipListNode
 }
 
 func NewSkipList() *SkipList {
@@ -43,7 +43,7 @@ func (s *SkipList) Insert(value LessEqual) {
 
 	node := &SkipListNode{
 		value: value,
-		next: make([]*SkipListNode, level + 1),
+		next:  make([]*SkipListNode, level+1),
 	}
 
 	current := s.head
@@ -124,15 +124,13 @@ func (s *SkipList) Print(w io.Writer) {
 
 	for i := s.height; i >= 0; i-- {
 		k := 0
-		for current = s.head.next[i];
-			current != nil;
-			current = current.next[i] {
-				for ; k < bottomRow[current.value]; k++ {
-					fmt.Fprintf(w, "--")
-				}
+		for current = s.head.next[i]; current != nil; current = current.next[i] {
+			for ; k < bottomRow[current.value]; k++ {
+				fmt.Fprintf(w, "--")
+			}
 
-				k = bottomRow[current.value] + 1
-				fmt.Fprintf(w, "%v-", current.value)
+			k = bottomRow[current.value] + 1
+			fmt.Fprintf(w, "%v-", current.value)
 		}
 		fmt.Fprintln(w, "")
 	}
